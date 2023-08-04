@@ -2,6 +2,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    font-family: 'Klee One', cursive;
 }
   
 main {
@@ -11,4 +12,13 @@ main {
 footer.page-footer {
     padding-top: 0;
     text-align: right;
+}
+
+.navbar-fixed, .nav-wrapper, .page-footer {
+    background-color: rgb(0, 165, 202);
+}
+
+.card:hover {
+    background-color: rgb(255, 219, 103);
+    cursor: pointer;
 }
