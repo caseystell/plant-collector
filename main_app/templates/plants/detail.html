@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Plant Details</h1>
+
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">{{ plant.name }}</span>
+    <p>Type: {{ plant.type }}</p>
+    <p>Description: {{ plant.description|linebreaks }}</p>
+    {% if plant.bears_fruit == True %}
+        <p>Bears Fruit: &#127825;</p>
+    {% else %}
+        <p>Bears Fruit: &#10060;</p>
+    {% endif %}
+    {% if plant.flowers == True and plant.name == 'Ice Plant' %}
+        <p>Flowers: &#127804;</p>
+    {% elif plant.flowers == True and plant.name == 'Desert Willow' or plant.name == "Peach Tree" %}
+        <p>Flowers: &#127800;</p>
+    {% elif plant.flowers == True %}
+        <p>Flowers: &#127802;</p>
+    {% else %}
+        <p>Flowers: &#10060;</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
