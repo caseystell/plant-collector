@@ -23,6 +23,10 @@
         <p>Flowers: &#10060;</p>
     {% endif %}
   </div>
+  <div class="card-action">
+    <a href="{% url 'plants_update' plant.id %}">Edit</a>
+    <a href="{% url 'plants_delete' plant.id %}">Delete</a>
+  </div>
 </div>
 
 {% endblock %}
