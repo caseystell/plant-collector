@@ -3,30 +3,78 @@
 
 <h1>Plant Details</h1>
 
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ plant.name }}</span>
-    <p>Type: {{ plant.type }}</p>
-    <p>Description: {{ plant.description|linebreaks }}</p>
-    {% if plant.bears_fruit == True %}
-        <p>Bears Fruit: &#127825;</p>
-    {% else %}
-        <p>Bears Fruit: &#10060;</p>
-    {% endif %}
-    {% if plant.flowers == True and plant.name == 'Ice Plant' %}
-        <p>Flowers: &#127804;</p>
-    {% elif plant.flowers == True and plant.name == 'Desert Willow' or plant.name == "Peach Tree" %}
-        <p>Flowers: &#127800;</p>
-    {% elif plant.flowers == True %}
-        <p>Flowers: &#127802;</p>
-    {% else %}
-        <p>Flowers: &#10060;</p>
-    {% endif %}
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ plant.name }}</span>
+        <p>Type: {{ plant.type }}</p>
+        <p>Description: {{ plant.description|linebreaks }}</p>
+        {% if plant.bears_fruit == 'Yes' %}
+            <p>Bears Fruit: &#127825;</p>
+        {% else %}
+            <p>Bears Fruit: &#10060;</p>
+        {% endif %}
+        {% if plant.flowers == 'Yes' and plant.name == 'Ice Plant' %}
+            <p>Flowers: &#127804;</p>
+        {% elif plant.flowers == 'Yes' and plant.name == 'Desert Willow' or plant.name == "Peach Tree" %}
+            <p>Flowers: &#127800;</p>
+        {% elif plant.flowers == 'Yes' %}
+            <p>Flowers: &#127802;</p>
+        {% else %}
+            <p>Flowers: &#10060;</p>
+        {% endif %}
+      </div>
+      <div class="card-action">
+        <a href="{% url 'plants_update' plant.id %}">Edit</a>
+        <a href="{% url 'plants_delete' plant.id %}">Delete</a>
+      </div>
+    </div>
   </div>
-  <div class="card-action">
-    <a href="{% url 'plants_update' plant.id %}">Edit</a>
-    <a href="{% url 'plants_delete' plant.id %}">Delete</a>
+  <div class="col s6">
+    <form action="{% url 'add_watering' plant.id %}" method="POST">
+      {% csrf_token %}
+      {{ watering_form.as_p }}
+      <input type="submit" class="btn" value="Add Watering">
+    </form>
+    <br>
+    {% if plant.watered_for_today %}
+      <div class="card-panel teal-text center-align">{{plant.name}} has been watered for today</div>
+    {% else %}
+      <div class="card-panel red-text center-align">{{plant.name}} might be thirsty</div>
+    {% endif %}
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Watering Time</th></tr>
+      </thead>
+      <tbody>
+        {% for watering in plant.watering_set.all %}
+          <tr>
+            <td>{{watering.date}}</td>
+            <td>{{watering.get_time_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 
+<script>
+  const dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+
+  const timeEl = document.getElementById('id_time');
+  M.FormSelect.init(timeEl);
+
+  const fruitEl = document.getElementById('id_bears_fruit');
+  M.FormSelect.init(fruitEl);
+
+  const flowerEl = document.getElementById('id_flowers');
+  M.FormSelect.init(flowerEl);
+</script>
 {% endblock %}
