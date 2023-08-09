@@ -17,12 +17,23 @@ FLOWERS = (
     ('N', 'No')
 )
 
+class Material(models.Model):
+  name = models.CharField(max_length=50)
+  made_of = models.CharField(max_length=100)
+
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('materials_detail', kwargs={'pk': self.id})
+
 class Plant(models.Model):
     name = models.CharField(max_length=150)
     type = models.CharField(max_length=100)
     description = models.CharField(max_length=250)
     bears_fruit = models.CharField(max_length=1, choices=FRUITS, default=FRUITS[1][0])
     flowers = models.CharField(max_length=1, choices=FLOWERS, default=FLOWERS[1][0])
+    materials = models.ManyToManyField(Material)
 
     def __str__(self):
         return f'{self.name} ({self.id})'
