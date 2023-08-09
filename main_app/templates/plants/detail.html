@@ -10,16 +10,16 @@
         <span class="card-title">{{ plant.name }}</span>
         <p>Type: {{ plant.type }}</p>
         <p>Description: {{ plant.description|linebreaks }}</p>
-        {% if plant.bears_fruit == 'Yes' %}
+        {% if plant.bears_fruit == 'Y' %}
             <p>Bears Fruit: &#127825;</p>
         {% else %}
             <p>Bears Fruit: &#10060;</p>
         {% endif %}
-        {% if plant.flowers == 'Yes' and plant.name == 'Ice Plant' %}
+        {% if plant.flowers == 'Y' and plant.name == 'Ice Plant' %}
             <p>Flowers: &#127804;</p>
-        {% elif plant.flowers == 'Yes' and plant.name == 'Desert Willow' or plant.name == "Peach Tree" %}
+        {% elif plant.flowers == 'Y' and plant.name == 'Desert Willow' or plant.name == "Peach Tree" %}
             <p>Flowers: &#127800;</p>
-        {% elif plant.flowers == 'Yes' %}
+        {% elif plant.flowers == 'Y' %}
             <p>Flowers: &#127802;</p>
         {% else %}
             <p>Flowers: &#10060;</p>
@@ -66,8 +66,7 @@
           <div class="card">
             <div class="card-content">
               <span class="card-title">
-                {{ material.name }}
-                Made from: {{ material.made_of }}
+                {{ material.name }} ({{ material.made_of }})
               </span>
             </div>
             <div class="card-action">
@@ -89,8 +88,7 @@
           <div class="card">
             <div class="card-content">
               <span class="card-title">
-                {{ material.name }}
-                Made from: {{ material.made_of }}
+                {{ material.name }} ({{ material.made_of }})
               </span>
             </div>
             <div class="card-action">
